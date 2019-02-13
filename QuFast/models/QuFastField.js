@@ -1,5 +1,9 @@
 
+'use strict';
+// FIRST-PARTY
 const QuFastState = require('./QuFastState')
+
+// THIRD-PARTY
 
 module.exports = class QuFastField {
     constructor(name) {

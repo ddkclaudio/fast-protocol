@@ -1,5 +1,9 @@
 'use strict';
+// FIRST-PARTY
+
+// THIRD-PARTY
 const Long = require('long')
+
 module.exports = class QuFastUtils {
     constructor() {
     }

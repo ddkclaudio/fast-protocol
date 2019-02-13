@@ -1,3 +1,4 @@
+'use strict';
 // FIRST-PARTY
 const QuFastDictionary = require('./QuFastDictionary')
 const QuFastElement = require('./QuFastElement')
@@ -8,7 +9,6 @@ const QuFastUtils = require('./QuFastUtils')
 const convert = require('xml-js')
 const fs = require('fs');
 const Long = require('long')
-
 
 module.exports = class QuFastEncoder {
     constructor(template_path) {
@@ -96,7 +96,6 @@ module.exports = class QuFastEncoder {
                 var element = elements[i]
                 var fieldName = element.name
                 var optional = element.isOptional()
-                var operator = element.operator
 
                 switch (element.type) {
                     case 'int32':

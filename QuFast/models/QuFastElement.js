@@ -1,3 +1,4 @@
+'use strict';
 // FIRST-PARTY
 const QuFastOperator = require('./QuFastOperator')
 

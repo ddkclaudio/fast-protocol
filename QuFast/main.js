@@ -2,7 +2,6 @@ const QuFastEncoder = require('./models/QuFastEncoder')
 
 const quFastEncoder = new QuFastEncoder(__dirname + "/templates/qu-template.xml")
 
-
 function testCodec(messages) {
     var buffer = []
 
@@ -12,9 +11,7 @@ function testCodec(messages) {
     }
 }
 
-
 console.log('Start testing fast-protocol encode/decode')
-
 
 testCodec([
     {

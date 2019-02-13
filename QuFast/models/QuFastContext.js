@@ -1,3 +1,8 @@
+'use strict';
+// FIRST-PARTY
+
+// THIRD-PARTY
+
 module.exports = class QuFastContext {
     constructor(pmap) {
         this.pmap = pmap
