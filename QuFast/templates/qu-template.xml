@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xmlns="http://www.fixprotocol.org/ns/fast/td/1.1" 
+  xmlns:scp="http://www.fixprotocol.org/ns/fast/scp/1.1" templateNs="http://www.nowhere.world/ns/fast/test">
+
+  <template id="70" name="RDPacketHeader">
+    <uInt32 name="SenderCompID" id="49"/>
+    <byteVector name="PacketSeqNum"/>
+    <byteVector name="SendingTime"/>
+  </template>
+
+  <template id="1" name="TestMessage">
+
+    <uInt32 name="MandatoryUInt32" id="11"/>
+
+    <uInt32 name="MandatoryUInt32Increment" id="12">
+      <increment/>
+    </uInt32>
+
+    <uInt32 name="MandatoryUInt32Copy" id="13">
+      <copy/>
+    </uInt32>
+
+    <uInt32 name="MandatoryUInt32Default" id="14">
+      <default value="0"/>
+    </uInt32>
+
+    <uInt32 name="MandatoryUInt32Delta" id="15">
+      <delta/>
+    </uInt32>
+
+    <string name="MandatoryString" id="16">
+    </string>
+
+    <string name="MandatoryStringCopy" id="17">
+      <copy/>
+    </string>
+
+    <string name="MandatoryStringDefault" id="18">
+      <default value="DEFVAL"/>
+    </string>
+
+    <string name="MandatoryStringDelta" id="19">
+      <delta/>
+    </string>
+
+    <uInt32 name="OptionalUInt32" id="21" presence="optional"/>
+
+    <uInt32 name="OptionalUInt32Increment" id="22" presence="optional">
+      <increment/>
+    </uInt32>
+
+    <uInt32 name="OptionalUInt32Copy" id="23" presence="optional">
+      <copy/>
+    </uInt32>
+
+    <uInt32 name="OptionalUInt32Default" id="24" presence="optional">
+      <default/>
+    </uInt32>
+
+    <uInt32 name="OptionalUInt32Delta" id="25" presence="optional">
+      <delta/>
+    </uInt32>
+
+    <string name="OptionalString" id="26" presence="optional">
+    </string>
+
+    <string name="OptionalStringCopy" id="27" presence="optional">
+      <copy/>
+    </string>
+
+    <string name="OptionalStringDefault" id="28" presence="optional">
+      <default value="OPTDEFVAL"/>
+    </string>
+
+
+    <group name="MandatoryGroup">
+      <uInt32 name="GrpMandatoryUInt32" id="111"/>
+
+      <uInt32 name="GrpMandatoryUInt32Increment" id="112">
+        <increment/>
+      </uInt32>
+
+    </group>
+
+    <group name="OptionalGroup" presence="optional">
+      <uInt32 name="GrpMandatoryUInt32" id="211"/>
+    </group>
+
+  </template>
+
+
+  <template id="2" name="UInt32OperatorMessage">
+    <uInt32 name="UInt32Increment" id="34">
+      <increment/>
+    </uInt32>
+
+    <uInt32 name="UInt32Default" id="34">
+      <default value="0"/>
+    </uInt32>
+  </template>
+
+  <template id="3" name="DecimalTestMessage">
+    <sequence name="DecimalArray">
+      <length name="NoDecimals"/>
+
+      <decimal name="MandatoryDecimal" id="71"/>
+      <decimal name="MandatoryDecimalConst" id="72">
+        <constant value="1e0"/>
+      </decimal>
+      <decimal name="MandatoryDecimalCopy" id="73">
+        <copy/>
+      </decimal>
+      <decimal name="MandatoryDecimalDelta" id="74">
+        <delta/>
+      </decimal>
+      <decimal name="MandatoryDecimalDefault" id="75">
+        <default value="1e0"/>
+      </decimal>
+
+      <decimal name="OptionalDecimal" id="81" presence="optional"/>
+      <decimal name="OptionalDecimalConst" id="82" presence="optional">
+        <constant value="1e0"/>
+      </decimal>
+      <decimal name="OptionalDecimalCopy" id="83" presence="optional">
+        <copy/>
+      </decimal>
+      <decimal name="OptionalDecimalDelta" id="84" presence="optional">
+        <delta/>
+      </decimal>
+      <decimal name="OptionalDecimalDefault" id="85" presence="optional">
+        <default value="1e0"/>
+      </decimal>
+    </sequence>
+  </template>
+
+  <template id="4" name="SequenceMessage">
+    <sequence name="MandatorySequence">
+      <length name="NoMandatorySequence"/>
+      <uInt32 name="SeqMandatoryUInt32" id="311"/>
+
+      <uInt32 name="SeqMandatoryUInt32Increment" id="312">
+        <increment/>
+      </uInt32>
+    </sequence>
+
+    <sequence name="OptionalSequence" presence="optional">
+      <length name="NoOptionalSequence"/>
+      <uInt32 name="SeqMandatoryUInt32" id="311"/>
+    </sequence>
+
+    <sequence name="OptionalSequenceConstLength" presence="optional">
+      <length name="NoOptionalSequenceConstLength">
+        <constant value="2" />
+      </length>
+      <uInt32 name="SeqMandatoryUInt32" id="311"/>
+    </sequence>
+
+  </template>
+
+
+  <template id="5" name="StringTestMessageDelta">
+    <sequence name="StringArray">
+      <length name="NoStrings"/>
+      <string name="MandatoryStringDelta" id="1">
+        <delta/>
+      </string>
+    </sequence>
+  </template>
+
+  <template id="6" name="Int32TestMessage">
+    <sequence name="Int32Array">
+      <length name="NoOfInteger"/>
+      <int32 name="MandatoryInt32"></int32>
+      <int32 name="MandatoryInt32Const">
+        <constant value="-2147483648"/>
+      </int32>
+      <int32 name="MandatoryInt32Copy">
+        <copy/>
+      </int32>
+      <int32 name="MandatoryInt32Default">
+        <default value="-2147483648"/>
+      </int32>
+      <int32 name="MandatoryInt32Increment">
+        <increment/>
+      </int32>
+      <int32 name="MandatoryInt32Delta">
+        <delta/>
+      </int32>
+      <int32 name="OptionalInt32" presence="optional"></int32>
+      <int32 name="OptionalInt32Const" presence="optional">
+        <constant value="-2147483648"/>
+      </int32>
+      <int32 name="OptionalInt32Copy" presence="optional">
+        <copy/>
+      </int32>
+      <int32 name="OptionalInt32Default" presence="optional">
+        <default value="2147483647"/>
+      </int32>
+      <int32 name="OptionalInt32DefaultWithoutValue" presence="optional">
+        <default/>
+      </int32>
+      <int32 name="OptionalInt32Increment" presence="optional">
+        <increment/>
+      </int32>
+      <int32 name="OptionalInt32Delta" presence="optional">
+        <delta/>
+      </int32>
+    </sequence>
+  </template>
+
+  <template id="7" name="UInt32TestMessage">
+    <sequence name="UInt32Array">
+      <length name="NoOfInteger"/>
+      <uInt32 name="MandatoryUInt32"></uInt32>
+      <uInt32 name="MandatoryUInt32Const">
+        <constant value="4294967295"/>
+      </uInt32>
+      <uInt32 name="MandatoryUInt32Copy">
+        <copy/>
+      </uInt32>
+      <uInt32 name="MandatoryUInt32Default">
+        <default value="4294967295"/>
+      </uInt32>
+      <uInt32 name="MandatoryUInt32Increment">
+        <increment/>
+      </uInt32>
+      <uInt32 name="MandatoryUInt32Delta">
+        <delta/>
+      </uInt32>
+      <uInt32 name="OptionalUInt32" presence="optional"></uInt32>
+      <uInt32 name="OptionalUInt32Const" presence="optional">
+        <constant value="4294967295"/>
+      </uInt32>
+      <uInt32 name="OptionalUInt32Copy" presence="optional">
+        <copy/>
+      </uInt32>
+      <uInt32 name="OptionalUInt32Default" presence="optional">
+        <default value="4294967295"/>
+      </uInt32>
+      <uInt32 name="OptionalUInt32DefaultWithoutValue" presence="optional">
+        <default/>
+      </uInt32>
+      <uInt32 name="OptionalUInt32Incremental" presence="optional">
+        <incremental/>
+      </uInt32>
+      <uInt32 name="OptionalUInt32Delta" presence="optional">
+        <delta/>
+      </uInt32>
+    </sequence>
+  </template>
+
+  <template id="8" name="Int64TestMessage">
+    <sequence name="Int64Array">
+      <length name="NoOfInteger"/>
+      <int64 name="MandatoryInt64"></int64>
+      <int64 name="MandatoryInt64Const">
+        <constant value="-9223372036854775807"/>
+      </int64>
+      <int64 name="MandatoryInt64Copy">
+        <copy/>
+      </int64>
+      <int64 name="MandatoryInt64Default">
+        <default value="-9223372036854775807"/>
+      </int64>
+      <int64 name="MandatoryInt64Increment">
+        <increment/>
+      </int64>
+      <int64 name="MandatoryInt64Delta">
+        <delta/>
+      </int64>
+      <int64 name="OptionalInt64" presence="optional"></int64>
+      <int64 name="OptionalInt64Const" presence="optional">
+        <constant value="-9223372036854775807"/>
+      </int64>
+      <int64 name="OptionalInt64Copy" presence="optional">
+        <copy/>
+      </int64>
+      <int64 name="OptionalInt64Default" presence="optional">
+        <default value="9223372036854775806"/>
+      </int64>
+      <int64 name="OptionalInt64DefaultWithoutValue" presence="optional">
+        <default/>
+      </int64>
+      <int64 name="OptionalInt64Increment" presence="optional">
+        <increment/>
+      </int64>
+      <int64 name="OptionalInt64Delta" presence="optional">
+        <delta/>
+      </int64>
+    </sequence>
+  </template>
+
+  <template id="9" name="UInt64TestMessage">
+    <sequence name="UInt64Array">
+      <length name="NoOfInteger"/>
+      <uInt64 name="MandatoryUInt64"></uInt64>
+      <uInt64 name="MandatoryUInt64Const">
+        <constant value="18446744073709551615"/>
+      </uInt64>
+      <uInt64 name="MandatoryUInt64Copy">
+        <copy/>
+      </uInt64>
+      <uInt64 name="MandatoryUInt64Default">
+        <default value="18446744073709551615"/>
+      </uInt64>
+      <uInt64 name="MandatoryUInt64Increment">
+        <increment/>
+      </uInt64>
+      <uInt64 name="MandatoryUInt64Delta">
+        <delta/>
+      </uInt64>
+      <uInt64 name="OptionalUInt64" presence="optional"></uInt64>
+      <uInt64 name="OptionalUInt64Const" presence="optional">
+        <constant value="18446744073709551615"/>
+      </uInt64>
+      <uInt64 name="OptionalUInt64Copy" presence="optional">
+        <copy/>
+      </uInt64>
+      <uInt64 name="OptionalUInt64Default" presence="optional">
+        <default value="18446744073709551615"/>
+      </uInt64>
+      <uInt64 name="OptionalUInt64DefaultWithoutValue" presence="optional">
+        <default/>
+      </uInt64>
+      <uInt64 name="OptionalUInt64Incremental" presence="optional">
+        <incremental/>
+      </uInt64>
+      <uInt64 name="OptionalUInt64Delta" presence="optional">
+        <delta/>
+      </uInt64>
+    </sequence>
+  </template>
+
+  <template id="10" name="StringTestMessage">
+    <sequence name="StringArray">
+      <length name="NoOfStrings"/>
+      <string name="MandatoryString"></string>
+      <string name="MandatoryStringConst">
+        <constant value="Hello World"/>
+      </string>
+      <string name="MandatoryStringCopy">
+        <copy/>
+      </string>
+      <string name="MandatoryStringDefault">
+        <default value="Foo"/>
+      </string>
+      <!--string name="MandatoryStringTail"><tail/></string-->
+      <string name="MandatoryStringDelta">
+        <delta/>
+      </string>
+      <string name="OptionalString" presence="optional"></string>
+      <string name="OptionalStringConst" presence="optional">
+        <constant value="Mini mee"/>
+      </string>
+      <string name="OptionalStringCopy" presence="optional">
+        <copy/>
+      </string>
+      <string name="OptionalStringDefault" presence="optional">
+        <default value="tic-tac"/>
+      </string>
+      <string name="OptionalStringIncremental" presence="optional">
+        <incremental/>
+      </string>
+      <string name="OptionalStringDelta" presence="optional">
+        <delta/>
+      </string>
+    </sequence>
+  </template>
+
+  <template id="11" name="GroupMessage">
+
+    <group name="MandatoryGroup">
+      <uInt32 name="GrpMandatoryUInt32" id="211"/>
+    </group>
+
+    <group name="OptionalGroup" presence="optional">
+      <uInt32 name="GrpMandatoryUInt32" id="211"/>
+    </group>
+
+  </template>
+
+  <template id="12" name="DeltaStringOperatorMessage">
+    <string name="MandatoryStringDelta" id="1">
+      <delta/>
+    </string>
+  </template>
+
+  <template id="13" name="ByteVectorTestMessage">
+    <sequence name="ByteVectorArray">
+      <length name="NoOfByteVector"/>
+      <byteVector name="MandatoryByteVector"></byteVector>
+      <byteVector name="MandatoryByteVectorConst">
+        <constant value="1234567890abcdef"/>
+      </byteVector>
+      <byteVector name="MandatoryByteVectorCopy">
+        <copy/>
+      </byteVector>
+      <byteVector name="OptionalByteVector" presence="optional"></byteVector>
+      <byteVector name="OptionalByteVectorConst" presence="optional">
+        <constant value="1234567890abcdef"/>
+      </byteVector>
+      <byteVector name="OptionalByteVectorCopy" presence="optional">
+        <copy/>
+      </byteVector>
+    </sequence>
+  </template>
+
+  <template id="100" name="UInt32EncodingTestMessage">
+    <uInt32 name="MandatoryUInt32"></uInt32>
+  </template>
+
+  <template id="101" name="Int32EncodingTestMessage">
+    <int32 name="MandatoryInt32"></int32>
+  </template>
+
+  <template id="102" name="UInt64EncodingTestMessage">
+    <uInt64 name="MandatoryUInt64"></uInt64>
+  </template>
+
+  <template id="103" name="Int64EncodingTestMessage">
+    <int64 name="MandatoryInt64"></int64>
+  </template>
+
+
+</templates>
