@@ -9,7 +9,6 @@ function testCodec(messages) {
     var buffer = []
 
     for (var i = 0; i < messages.length; ++i) {
-        console.log('Input message:', messages[i].msg)
         buffer = buffer.concat(quFastEncoder.encode(messages[i].name, messages[i].msg))
     }
 
