@@ -1,28 +1,10 @@
+const QuFastEncoder = require('../QuFast/models/QuFastEncoder')
+const QuFastDecoder = require('../QuFast/models/QuFastDecoder')
+const QuFastUtils = require('../QuFast/models/QuFastUtils')
+
 const expect = require('chai').expect
-var FastStream = require('../index.js')
-//var assert = require('assert');
 var diff = require('deep-diff')
-
 var logDebug = false
-
-function toHexString(byteArray) {
-  var s = ''
-  byteArray.forEach(function(byte) {
-    s += ('0' + (byte & 0xFF).toString(16)).slice(-2) + ' '
-  })
-  return s
-}
-
-function join(array) {
-  var s = ''
-  if (array) {
-    array.forEach(function(token) {
-      s += (token === parseInt(token, 10)) ? '[' + token + ']' : (s.length ? '.' : '') + token
-    })
-  }
-  return s
-}
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -36,18 +18,18 @@ function testCodec(messages) {
   var buffer = []
 
   // encode messages ony by one
-  var encoder = new FastStream.Encoder(__dirname + '/test.xml')
+  var encoder = new QuFastEncoder(__dirname + '/test.xml')
   for (var i = 0; i < messages.length; ++i) {
     if (logDebug) console.log('Input message:', messages[i].msg)
     buffer = buffer.concat(encoder.encode(messages[i].name, messages[i].msg))
   }
 
-  if (logDebug) console.log('\n', toHexString(buffer), '\n')
+  if (logDebug) console.log('\n', QuFastUtils.toHexString(buffer), '\n')
 
   // decode buffer
-  var decoder = new FastStream.Decoder(__dirname + '/test.xml')
+  var decoder = new QuFastDecoder(__dirname + '/test.xml')
   var i = 0
-  decoder.decode(buffer, function(msg, name) {
+  decoder.decode(buffer, function (msg, name) {
 
     if (logDebug) console.log('Output message(', name, '):\n', msg)
 
@@ -56,16 +38,16 @@ function testCodec(messages) {
       for (var d = 0; d < differences.length; ++d) {
         switch (differences[d].kind) {
           case 'N': // indicates a newly added property/element
-            console.log('Error: Additional property found:', messages[i].name, '.', join(differences[d].path))
+            console.log('Error: Additional property found:', messages[i].name, '.', QuFastUtils.join(differences[d].path))
             break
           case 'D': // indicates a property/element was deleted
-            console.log('Error: Property ', messages[i].name, '.', join(differences[d].path), 'missing')
+            console.log('Error: Property ', messages[i].name, '.', QuFastUtils.join(differences[d].path), 'missing')
             break
           case 'E': // indicates a property/element was changed
-            console.log('Error: Property value', messages[i].name, '.', join(differences[d].path), 'differs:', differences[d].lhs, '<>', differences[d].rhs)
+            console.log('Error: Property value', messages[i].name, '.', QuFastUtils.join(differences[d].path), 'differs:', differences[d].lhs, '<>', differences[d].rhs)
             break
           case 'A': // indicates a change occurred within an array
-            console.log('Error: Array content ', messages[i].name, '.', join(differences[d].path), 'differs:', differences[d].lhs, '<>', differences[d].rhs)
+            console.log('Error: Array content ', messages[i].name, '.', QuFastUtils.join(differences[d].path), 'differs:', differences[d].lhs, '<>', differences[d].rhs)
             break
         }
       }
@@ -74,20 +56,10 @@ function testCodec(messages) {
     }
     console.log('Info: ', messages[i].name, 'passed test')
     ++i
-
-    //assert.deepEqual(messages[i].msg, msg, differences)
-    /*
-    if (JSON.stringify(messages[i++].msg) !== JSON.stringify(msg)) {
-      console.log('Output message:', msg)
-      console.log('Expected message:', messages[i-1].msg)
-      throw new Error('Decoded message does not match input message')
-    }*/
   })
 }
 
-
 console.log('Start testing fast-protocol encode/decode')
-
 
 testCodec([
   {
@@ -640,13 +612,13 @@ testCodec([
     name: "StringTestMessageDelta",
     msg: {
       StringArray: [
-        {MandatoryStringDelta: "Hello"},
-        {MandatoryStringDelta: "Hello World"},
-        {MandatoryStringDelta: "Hello World"},
-        {MandatoryStringDelta: "World"},
-        {MandatoryStringDelta: "Hello World"},
-        {MandatoryStringDelta: "Hello World!"},
-        {MandatoryStringDelta: "!Hello World"}
+        { MandatoryStringDelta: "Hello" },
+        { MandatoryStringDelta: "Hello World" },
+        { MandatoryStringDelta: "Hello World" },
+        { MandatoryStringDelta: "World" },
+        { MandatoryStringDelta: "Hello World" },
+        { MandatoryStringDelta: "Hello World!" },
+        { MandatoryStringDelta: "!Hello World" }
       ]
     }
   }
@@ -656,15 +628,19 @@ testCodec([
 testCodec([
   {
     name: "RDPacketHeader",
-    msg: { SenderCompID: 1,
-      PacketSeqNum: [ 0, 8, 58, 9 ],
-      SendingTime: [ 21, 105, 89, 139, 55, 77, 80, 125 ] }
+    msg: {
+      SenderCompID: 1,
+      PacketSeqNum: [0, 8, 58, 9],
+      SendingTime: [21, 105, 89, 139, 55, 77, 80, 125]
+    }
   },
   {
     name: "RDPacketHeader",
-    msg: { SenderCompID: 2,
-      PacketSeqNum: [ 0, 8, 58, 10 ],
-      SendingTime: [ 21, 105, 89, 139, 55, 77, 80, 126 ] }
+    msg: {
+      SenderCompID: 2,
+      PacketSeqNum: [0, 8, 58, 10],
+      SendingTime: [21, 105, 89, 139, 55, 77, 80, 126]
+    }
   }
 ])
 
@@ -672,15 +648,15 @@ testCodec([
 testCodec([
   {
     name: "DeltaStringOperatorMessage",
-    msg: {MandatoryStringDelta: "Hello"}
+    msg: { MandatoryStringDelta: "Hello" }
   },
   {
     name: "DeltaStringOperatorMessage",
-    msg: {MandatoryStringDelta: "Hello World"}
+    msg: { MandatoryStringDelta: "Hello World" }
   },
   {
     name: "DeltaStringOperatorMessage",
-    msg: {MandatoryStringDelta: "World"}
+    msg: { MandatoryStringDelta: "World" }
   }
 ])
 
@@ -812,20 +788,26 @@ testCodec([
     name: "SequenceMessage",
     msg: {
       MandatorySequence: [
-        {SeqMandatoryUInt32: 12,
-        SeqMandatoryUInt32Increment: 23},
-        {SeqMandatoryUInt32: 14,
-        SeqMandatoryUInt32Increment: 24},
-        {SeqMandatoryUInt32: 16,
-        SeqMandatoryUInt32Increment: 25}
+        {
+          SeqMandatoryUInt32: 12,
+          SeqMandatoryUInt32Increment: 23
+        },
+        {
+          SeqMandatoryUInt32: 14,
+          SeqMandatoryUInt32Increment: 24
+        },
+        {
+          SeqMandatoryUInt32: 16,
+          SeqMandatoryUInt32Increment: 25
+        }
       ],
       OptionalSequence: [
-        {SeqMandatoryUInt32: 18},
-        {SeqMandatoryUInt32: 20}
+        { SeqMandatoryUInt32: 18 },
+        { SeqMandatoryUInt32: 20 }
       ],
       OptionalSequenceConstLength: [
-        {SeqMandatoryUInt32: 33},
-        {SeqMandatoryUInt32: 43}
+        { SeqMandatoryUInt32: 33 },
+        { SeqMandatoryUInt32: 43 }
       ]
     }
   }
