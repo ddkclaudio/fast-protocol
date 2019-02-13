@@ -42,4 +42,15 @@ module.exports = class QuFastUtils {
         return s
     }
 
+    static decimalToString(value) {
+        if (value == null) return undefined
+        return value.m.concat('e', value.e)
+    }
+
+    static arrayFromBuffer(buffer) {
+        var ret = []
+        for (var i = 0; i < buffer.length; ++i) ret.push(buffer[i])
+        return ret
+    }
+
 }
