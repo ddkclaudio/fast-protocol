@@ -5,23 +5,24 @@ const QuFastUtils = require('./models/QuFastUtils')
 QuFastUtils.inDebuf = false
 
 function testCodec(messages) {
+    const filename = "qu-template.xml"
+    // const filename = "templates-PUMA.xml"
+    const quFastEncoder = new QuFastEncoder(__dirname + "/templates/"+filename)
+    // var buffer = []
 
-    const quFastEncoder = new QuFastEncoder(__dirname + "/templates/qu-template.xml")
-    var buffer = []
+    // for (var i = 0; i < messages.length; ++i) {
+    //     buffer = buffer.concat(quFastEncoder.encode(messages[i].name, messages[i].msg))
+    // }
 
-    for (var i = 0; i < messages.length; ++i) {
-        buffer = buffer.concat(quFastEncoder.encode(messages[i].name, messages[i].msg))
-    }
+    // console.log('\n', QuFastUtils.toHexString(buffer), '\n')
 
-    console.log('\n', QuFastUtils.toHexString(buffer), '\n')
+    // var quFastDecoder = new QuFastDecoder(__dirname + "/templates/qu-template.xml")
 
-    var quFastDecoder = new QuFastDecoder(__dirname + "/templates/qu-template.xml")
-
-    var i = 0
-    quFastDecoder.decode(buffer, function (msg, name) {
-        console.log(1, JSON.stringify(messages))
-        console.log(2, JSON.stringify(msg))
-    })
+    // var i = 0
+    // quFastDecoder.decode(buffer, function (msg, name) {
+    //     console.log(1, JSON.stringify(messages))
+    //     console.log(2, JSON.stringify(msg))
+    // })
 }
 
 testCodec([
