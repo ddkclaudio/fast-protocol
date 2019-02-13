@@ -49,14 +49,14 @@ module.exports = class QuFastDecoder extends QuFastBase {
                 }
             } else {
                 // template definition not found
-                console.log('Error: Template definition for template id =', this.TemplateID, 'not found!')
+                if(QuFastUtils.inDebuf) console.log('Error: Template definition for template id =', this.TemplateID, 'not found!')
                 throw new Error('Error: Template definition for template id = ' + this.TemplateID + ' not found!')
             }
         }
     }
 
     decodeUInt32Value(ctx, field) {
-        console.log('DecodeUInt32Value', field.name, field.presence, field.operator != null ? field.operator.name : '')
+        if(QuFastUtils.inDebuf) console.log('DecodeUInt32Value', field.name, field.presence, field.operator != null ? field.operator.name : '')
         var optional = field.isOptional()
         if (!field.hasOperator()) return this.decodeU32(optional)
 
@@ -97,7 +97,7 @@ module.exports = class QuFastDecoder extends QuFastBase {
     }
 
     decodeInt32Value(ctx, field) {
-        console.log('DecodeInt32Value', field.name, field.presence, field.operator)
+        if(QuFastUtils.inDebuf) console.log('DecodeInt32Value', field.name, field.presence, field.operator)
         var optional = field.isOptional()
         if (!field.hasOperator()) return this.decodeI32(optional)
 
@@ -138,8 +138,8 @@ module.exports = class QuFastDecoder extends QuFastBase {
     }
 
     decodeUInt64Value(ctx, field) {
-        console.log('DecodeUInt64Value', field.name, field.presence, field.operator)
-        console.log('DECODE(U64):', QuFastUtils.toHexString(this.buffer.slice(this.pos)), '\n')
+        if(QuFastUtils.inDebuf) console.log('DecodeUInt64Value', field.name, field.presence, field.operator)
+        if(QuFastUtils.inDebuf) console.log('DECODE(U64):', QuFastUtils.toHexString(this.buffer.slice(this.pos)), '\n')
         var optional = field.isOptional()
         if (!field.hasOperator()) return this.decodeU64(optional)
 
@@ -174,8 +174,8 @@ module.exports = class QuFastDecoder extends QuFastBase {
     }
 
     decodeInt64Value(ctx, field) {
-        console.log('DecodeInt64Value', field.name, field.presence, field.operator)
-        console.log('DECODE(I64):', QuFastUtils.toHexString(this.buffer.slice(this.pos)), '\n')
+        if(QuFastUtils.inDebuf) console.log('DecodeInt64Value', field.name, field.presence, field.operator)
+        if(QuFastUtils.inDebuf) console.log('DECODE(I64):', QuFastUtils.toHexString(this.buffer.slice(this.pos)), '\n')
         var optional = field.isOptional()
         if (!field.hasOperator()) return this.decodeI64(optional)
 
@@ -210,7 +210,7 @@ module.exports = class QuFastDecoder extends QuFastBase {
     }
 
     decodeDecimalValue(ctx, field) {
-        console.log('DecodeDecimalValue', field.name, field.presence, field.operator)
+        if(QuFastUtils.inDebuf) console.log('DecodeDecimalValue', field.name, field.presence, field.operator)
         var optional = field.isOptional()
         if (!field.hasOperator()) return QuFastUtils.decimalToString(this.decodeDecimal(optional))
 
@@ -248,7 +248,7 @@ module.exports = class QuFastDecoder extends QuFastBase {
     }
 
     decodeStringValue(ctx, field) {
-        console.log('DecodeStringValue', field.name, field.presence, field.operator)
+        if(QuFastUtils.inDebuf) console.log('DecodeStringValue', field.name, field.presence, field.operator)
         var optional = field.isOptional()
         if (!field.hasOperator()) return this.decodeString(optional)
 
@@ -289,7 +289,7 @@ module.exports = class QuFastDecoder extends QuFastBase {
     }
 
     decodeByteVectorValue(ctx, field) {
-        console.log('DecodeByteVectorValue', field.name, field.presence, field.operator)
+        if(QuFastUtils.inDebuf) console.log('DecodeByteVectorValue', field.name, field.presence, field.operator)
         var optional = field.isOptional()
         if (!field.hasOperator()) return this.decodeByteVector(optional)
 
@@ -330,11 +330,11 @@ module.exports = class QuFastDecoder extends QuFastBase {
     }
 
     decodePMAP() {
-        console.log('DECODE PMAP', this.pos, this.buffer.length - this.pos)
+        if(QuFastUtils.inDebuf) console.log('DECODE PMAP', this.pos, this.buffer.length - this.pos)
         var pmap = []
         while (this.pos < this.buffer.length) {
             var byteVal = this.buffer[this.pos++]
-            console.log('PMAP BYTE', byteVal)
+            if(QuFastUtils.inDebuf) console.log('PMAP BYTE', byteVal)
             var stop = byteVal & 0x80
             for (var i = 0; i < 7; ++i, byteVal <<= 1) {
                 pmap.push(byteVal & 0x40 ? true : false)
@@ -386,7 +386,7 @@ module.exports = class QuFastDecoder extends QuFastBase {
     }
 
     decodeI64(optional) {
-        console.log('decodeI64', optional)
+        if(QuFastUtils.inDebuf) console.log('decodeI64', optional)
         if (optional) {
             var byteVal = this.buffer[this.pos]
             if (byteVal == 0x80) {
@@ -409,7 +409,7 @@ module.exports = class QuFastDecoder extends QuFastBase {
     }
 
     decodeU64(optional) {
-        console.log('decodeU64', optional)
+        if(QuFastUtils.inDebuf) console.log('decodeU64', optional)
         if (optional) {
             var byteVal = this.buffer[this.pos]
             if (byteVal == 0x80) {
@@ -489,31 +489,31 @@ module.exports = class QuFastDecoder extends QuFastBase {
             switch (element.type) {
                 case 'int32':
                     val[fieldName] = this.decodeInt32Value(ctx, element)
-                    console.log(fieldName, '=', val[fieldName])
+                    if(QuFastUtils.inDebuf) console.log(fieldName, '=', val[fieldName])
                     break
                 case 'uInt32':
                     val[fieldName] = this.decodeUInt32Value(ctx, element)
-                    console.log(fieldName, '=', val[fieldName])
+                    if(QuFastUtils.inDebuf) console.log(fieldName, '=', val[fieldName])
                     break
                 case 'int64':
                     val[fieldName] = this.decodeInt64Value(ctx, element)
-                    console.log(fieldName, '=', val[fieldName])
+                    if(QuFastUtils.inDebuf) console.log(fieldName, '=', val[fieldName])
                     break
                 case 'uInt64':
                     val[fieldName] = this.decodeUInt64Value(ctx, element)
-                    console.log(fieldName, '=', val[fieldName])
+                    if(QuFastUtils.inDebuf) console.log(fieldName, '=', val[fieldName])
                     break
                 case 'decimal':
                     val[fieldName] = this.decodeDecimalValue(ctx, element)
-                    console.log(fieldName, '=', val[fieldName])
+                    if(QuFastUtils.inDebuf) console.log(fieldName, '=', val[fieldName])
                     break
                 case 'string':
                     val[fieldName] = this.decodeStringValue(ctx, element)
-                    console.log(fieldName, '=', val[fieldName])
+                    if(QuFastUtils.inDebuf) console.log(fieldName, '=', val[fieldName])
                     break
                 case 'byteVector':
                     val[fieldName] = this.decodeByteVectorValue(ctx, element)
-                    console.log(fieldName, '=', val[fieldName])
+                    if(QuFastUtils.inDebuf) console.log(fieldName, '=', val[fieldName])
                     break
                 case 'group':
                     var isBitSet = optional ? ctx.isBitSet() : false
@@ -528,7 +528,7 @@ module.exports = class QuFastDecoder extends QuFastBase {
                     val[fieldName] = this.decodeSequenceValue(ctx, element)
                     break
                 default:
-                    console.log('Not supported type', element.type, fieldName)
+                    if(QuFastUtils.inDebuf) console.log('Not supported type', element.type, fieldName)
                     break
             }
         }
@@ -537,9 +537,9 @@ module.exports = class QuFastDecoder extends QuFastBase {
     }
 
     decodeSequenceValue(ctx, sequence) {
-        console.log('DecodeSequence', sequence.name, sequence.presence)
+        if(QuFastUtils.inDebuf) console.log('DecodeSequence', sequence.name, sequence.presence)
         var length = this.decodeUInt32Value(ctx, sequence.lengthField)
-        console.log(sequence.lengthField.name, '=', length)
+        if(QuFastUtils.inDebuf) console.log(sequence.lengthField.name, '=', length)
         if (length == null) {
             return undefined
         }

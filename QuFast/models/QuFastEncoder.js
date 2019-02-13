@@ -23,7 +23,7 @@ module.exports = class QuFastEncoder extends QuFastBase {
     }
 
     encode(name, value) {
-        console.log('Encode message', name, 'value:', value)
+        if(QuFastUtils.inDebuf) console.log('Encode message', name, 'value:', value)
 
         // lookup template definition
         var template = this.listTemplate[name]
@@ -42,7 +42,7 @@ module.exports = class QuFastEncoder extends QuFastBase {
 
         if (template.id == 120) {
             // FAST Reset
-            console.log('Reset Dictionary')
+            if(QuFastUtils.inDebuf) console.log('Reset Dictionary')
             this.Dictionary.reset()
         }
 
@@ -94,7 +94,7 @@ module.exports = class QuFastEncoder extends QuFastBase {
                         this.encodeSequence(ctx, element, value[fieldName])
                         break
                     default:
-                        console.log('Error: Not supported type', element.type, fieldName)
+                        if(QuFastUtils.inDebuf) console.log('Error: Not supported type', element.type, fieldName)
                         break
                 }
             }
@@ -104,7 +104,7 @@ module.exports = class QuFastEncoder extends QuFastBase {
     }
 
     encodeSequence(ctx, field, value, start) {
-        console.log('EncodeSequence:', field.name, value, 'OPT:', field.isOptional(), 'HAS_OP:', field.lengthField.hasOperator())
+        if(QuFastUtils.inDebuf) console.log('EncodeSequence:', field.name, value, 'OPT:', field.isOptional(), 'HAS_OP:', field.lengthField.hasOperator())
         var begin = ctx.buffer.length
 
         var optional = field.isOptional()
@@ -125,7 +125,7 @@ module.exports = class QuFastEncoder extends QuFastBase {
     }
 
     encodeUInt32Value(ctx, field, value) {
-        console.log('EncodeUInt32Value:', field.name, value, 'OPT:', field.isOptional(), 'HAS_OP:', field.hasOperator())
+        if(QuFastUtils.inDebuf) console.log('EncodeUInt32Value:', field.name, value, 'OPT:', field.isOptional(), 'HAS_OP:', field.hasOperator())
         var pos = ctx.buffer.length
         var optional = field.isOptional()
         if (!field.hasOperator()) {
@@ -201,11 +201,11 @@ module.exports = class QuFastEncoder extends QuFastBase {
                     break
             }
         }
-        console.log('ENCODED(U32):', QuFastUtils.toHexString(ctx.buffer.slice(pos)), '\n')
+        if(QuFastUtils.inDebuf) console.log('ENCODED(U32):', QuFastUtils.toHexString(ctx.buffer.slice(pos)), '\n')
     }
 
     encodeInt32Value(ctx, field, value) {
-        console.log('EncodeInt32Value:', field.name, value, 'OPT:', field.isOptional(), 'HAS_OP:', field.hasOperator())
+        if(QuFastUtils.inDebuf) console.log('EncodeInt32Value:', field.name, value, 'OPT:', field.isOptional(), 'HAS_OP:', field.hasOperator())
         var pos = ctx.buffer.length
         var optional = field.isOptional()
         if (!field.hasOperator()) {
@@ -281,11 +281,11 @@ module.exports = class QuFastEncoder extends QuFastBase {
                     break
             }
         }
-        console.log('ENCODED(I32):', QuFastUtils.toHexString(ctx.buffer.slice(pos)), '\n')
+        if(QuFastUtils.inDebuf) console.log('ENCODED(I32):', QuFastUtils.toHexString(ctx.buffer.slice(pos)), '\n')
     }
 
     encodeInt64Value(ctx, field, value) {
-        console.log('EncodeInt64Value:', field.name, value != null ? value.toString(10) : undefined, 'OPT:', field.isOptional(), 'Operator:', field.operator)
+        if(QuFastUtils.inDebuf) console.log('EncodeInt64Value:', field.name, value != null ? value.toString(10) : undefined, 'OPT:', field.isOptional(), 'Operator:', field.operator)
         var pos = ctx.buffer.length
         var optional = field.isOptional()
         if (!field.hasOperator()) {
@@ -361,11 +361,11 @@ module.exports = class QuFastEncoder extends QuFastBase {
                     break
             }
         }
-        console.log('ENCODED(I64):', QuFastUtils.toHexString(ctx.buffer.slice(pos)), '\n')
+        if(QuFastUtils.inDebuf) console.log('ENCODED(I64):', QuFastUtils.toHexString(ctx.buffer.slice(pos)), '\n')
     }
 
     encodeUInt64Value(ctx, field, value) {
-        console.log('EncodeUInt64Value:', field.name, value == null ? undefined : value.toString(10), 'OPT:', field.isOptional(), 'Operator:', field.operator)
+        if(QuFastUtils.inDebuf) console.log('EncodeUInt64Value:', field.name, value == null ? undefined : value.toString(10), 'OPT:', field.isOptional(), 'Operator:', field.operator)
         var pos = ctx.buffer.length
         var optional = field.isOptional()
         if (!field.hasOperator()) {
@@ -441,11 +441,11 @@ module.exports = class QuFastEncoder extends QuFastBase {
                     break
             }
         }
-        console.log('ENCODED(U64):', QuFastUtils.toHexString(ctx.buffer.slice(pos)), '\n')
+        if(QuFastUtils.inDebuf) console.log('ENCODED(U64):', QuFastUtils.toHexString(ctx.buffer.slice(pos)), '\n')
     }
 
     encodeDecimalValue(ctx, field, valueIn) {
-        console.log('EncodeDecimalValue:', field.name, valueIn, field.isOptional(), field.operator)
+        if(QuFastUtils.inDebuf) console.log('EncodeDecimalValue:', field.name, valueIn, field.isOptional(), field.operator)
         var value = QuFastUtils.parseDecimal(valueIn)
         var pos = ctx.buffer.length
         var optional = field.isOptional()
@@ -525,11 +525,11 @@ module.exports = class QuFastEncoder extends QuFastBase {
                     break
             }
         }
-        console.log('ENCODED(DEC):', QuFastUtils.toHexString(ctx.buffer.slice(pos)), '\n')
+        if(QuFastUtils.inDebuf) console.log('ENCODED(DEC):', QuFastUtils.toHexString(ctx.buffer.slice(pos)), '\n')
     }
 
     encodeStringValue(ctx, field, value) {
-        console.log('EncodeStringValue:', field.name, value, field.isOptional())
+        if(QuFastUtils.inDebuf) console.log('EncodeStringValue:', field.name, value, field.isOptional())
         var pos = ctx.buffer.length
         var optional = field.isOptional()
         if (!field.hasOperator()) {
@@ -575,11 +575,11 @@ module.exports = class QuFastEncoder extends QuFastBase {
                     break
             }
         }
-        console.log('ENCODED(STR):', QuFastUtils.toHexString(ctx.buffer.slice(pos)), '\n')
+        if(QuFastUtils.inDebuf) console.log('ENCODED(STR):', QuFastUtils.toHexString(ctx.buffer.slice(pos)), '\n')
     }
 
     encodeByteVectorValue(ctx, field, value) {
-        console.log('encodeByteVectorValue:', value)
+        if(QuFastUtils.inDebuf) console.log('encodeByteVectorValue:', value)
         var pos = ctx.buffer.length
         var optional = field.isOptional()
         if (!field.hasOperator()) {
@@ -629,7 +629,7 @@ module.exports = class QuFastEncoder extends QuFastBase {
                     break
             }
         }
-        console.log('ENCODED(BYT):', QuFastUtils.toHexString(ctx.buffer.slice(pos)), '\n')
+        if(QuFastUtils.inDebuf) console.log('ENCODED(BYT):', QuFastUtils.toHexString(ctx.buffer.slice(pos)), '\n')
     }
 
     getSizeU32(value) {
@@ -720,7 +720,7 @@ module.exports = class QuFastEncoder extends QuFastBase {
                 last = false
             }
         }
-        console.log('ENCODED(PMAP):', QuFastUtils.toHexString(ctx.buffer.slice(0, ctx.buffer.length - pos)), '\n')
+        if(QuFastUtils.inDebuf) console.log('ENCODED(PMAP):', QuFastUtils.toHexString(ctx.buffer.slice(0, ctx.buffer.length - pos)), '\n')
     }
 
     encodeNull(ctx) {
@@ -763,7 +763,7 @@ module.exports = class QuFastEncoder extends QuFastBase {
     }
 
     encodeI32(ctx, valueIn, optional) {
-        console.log('ENCODE I32, VALUE:', valueIn, 'OPT?', optional)
+        if(QuFastUtils.inDebuf) console.log('ENCODE I32, VALUE:', valueIn, 'OPT?', optional)
         /*
         if (optional && valueIn == null) {
             this.encodeNull(ctx)
@@ -786,7 +786,7 @@ module.exports = class QuFastEncoder extends QuFastBase {
 
         // set sign
         if (value < 0) {
-            //console.log('SET_SIGN', ctx.buffer[sign], sign)
+            //if(QuFastUtils.inDebuf) console.log('SET_SIGN', ctx.buffer[sign], sign)
             //ctx.buffer[sign] |= 0x40
         }
         //*sign |= (0x40 & (value >> SIGN_SHIFT));
@@ -795,7 +795,7 @@ module.exports = class QuFastEncoder extends QuFastBase {
     }
 
     encodeI64(ctx, valueIn, optional) {
-        console.log('ENCODE I64', valueIn, optional)
+        if(QuFastUtils.inDebuf) console.log('ENCODE I64', valueIn, optional)
         /*
         if (optional && valueIn == null) {
             this.encodeNull(ctx)
@@ -803,7 +803,7 @@ module.exports = class QuFastEncoder extends QuFastBase {
         }*/
 
         var value = (optional && valueIn.greaterThanOrEqual(Long.ZERO)) ? valueIn.add(Long.ONE) : valueIn
-        console.log('ENCODE I64 VAL', value.toString(16), optional, value.toBytesBE())
+        if(QuFastUtils.inDebuf) console.log('ENCODE I64 VAL', value.toString(16), optional, value.toBytesBE())
 
         var size = this.getSizeI64(value);
         var sign = value.isNegative() ? 0x40 : 0

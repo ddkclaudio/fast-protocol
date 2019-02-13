@@ -1,5 +1,6 @@
 'use strict';
 // FIRST-PARTY
+const QuFastUtils = require('./QuFastUtils')
 
 // THIRD-PARTY
 
@@ -11,9 +12,9 @@ module.exports = class QuFastContext {
     }
 
     isBitSet() {
-        console.log('PMAP[', this.idx, '] =', this.pmap[this.idx])
+        if (QuFastUtils.inDebuf) console.log('PMAP[', this.idx, '] =', this.pmap[this.idx])
         if (!this.pmap.length) {
-            console.log('PMAP overflow at', this.idx)
+            if (QuFastUtils.inDebuf) console.log('PMAP overflow at', this.idx)
             console.trace()
             throw new Error('PMAP overflow')
         }
@@ -21,7 +22,7 @@ module.exports = class QuFastContext {
     }
 
     setBit(bit) {
-        console.log('SET PMAP[', this.pmap.length, '] =', bit)
+        if (QuFastUtils.inDebuf) console.log('SET PMAP[', this.pmap.length, '] =', bit)
         this.pmap.push(bit)
     }
 
