@@ -117,4 +117,8 @@ module.exports = class QuFastElement {
         if (!this.elements) this.elements = []
         this.elements.push(element)
     }
+
+    hasOperator() {
+        return this.operator != null
+    }
 }

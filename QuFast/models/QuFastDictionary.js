@@ -1,10 +1,12 @@
-module.exports = class Dictionary {
+const QuFastField = require('./QuFastField')
+
+module.exports = class QuFastDictionary {
     constructor() {
     }
 
     getField(name) {
         if (!this.hasOwnProperty(name)) {
-            this[name] = new Field(name)
+            this[name] = new QuFastField(name)
         }
         return this[name]
     }
