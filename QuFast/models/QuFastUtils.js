@@ -32,4 +32,14 @@ module.exports = class QuFastUtils {
         return { m: mantissa.toString(10), e: exponent }
     }
 
+    static join(array) {
+        var s = ''
+        if (array) {
+            array.forEach(function (token) {
+                s += (token === parseInt(token, 10)) ? '[' + token + ']' : (s.length ? '.' : '') + token
+            })
+        }
+        return s
+    }
+
 }
