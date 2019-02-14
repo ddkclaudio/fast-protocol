@@ -1,3 +1,4 @@
+// https://nodejs.org/api/dgram.html
 const QuFastEncoder = require('./models/QuFastEncoder')
 const QuFastDecoder = require('./models/QuFastDecoder')
 const QuFastUtils = require('./models/QuFastUtils')
@@ -5,170 +6,187 @@ const QuFastUtils = require('./models/QuFastUtils')
 QuFastUtils.inDebuf = false
 
 function testCodec(messages) {
-    const filename = "qu-template.xml"
-    // const filename = "templates-PUMA.xml"
-    const quFastEncoder = new QuFastEncoder(__dirname + "/templates/"+filename)
-    // var buffer = []
+    // const filename = "qu-template.xml"
+    const filename = "templates-PUMA.xml"
+    const quFastEncoder = new QuFastEncoder(__dirname + "/templates/" + filename)
+    var buffer = []
 
-    // for (var i = 0; i < messages.length; ++i) {
-    //     buffer = buffer.concat(quFastEncoder.encode(messages[i].name, messages[i].msg))
-    // }
+    for (var i = 0; i < messages.length; ++i) {
+        buffer = buffer.concat(quFastEncoder.encode(messages[i].name, messages[i].msg))
+    }
 
-    // console.log('\n', QuFastUtils.toHexString(buffer), '\n')
+    console.log('\n', QuFastUtils.toHexString(buffer), '\n')
 
-    // var quFastDecoder = new QuFastDecoder(__dirname + "/templates/qu-template.xml")
+    var quFastDecoder = new QuFastDecoder(__dirname + "/templates/" + filename)
 
-    // var i = 0
-    // quFastDecoder.decode(buffer, function (msg, name) {
-    //     console.log(1, JSON.stringify(messages))
-    //     console.log(2, JSON.stringify(msg))
-    // })
+    var i = 0
+    quFastDecoder.decode(buffer, function (msg, name) {
+        console.log(1, JSON.stringify(messages))
+        console.log(2, (msg))
+    })
 }
 
 testCodec([
     {
-        name: "Int32TestMessage",
+        name: "MDIncRefresh_150",
         msg: {
-            Int32Array: [
-                {
-                    MandatoryInt32: -8193,
-                    MandatoryInt32Const: -2147483648,
-                    MandatoryInt32Copy: 2147483647,
-                    MandatoryInt32Default: 2147483647,
-                    MandatoryInt32Increment: -2147483648,
-                    MandatoryInt32Delta: -2147483648,
-                    OptionalInt32: -942755,
-                    OptionalInt32Const: undefined,
-                    OptionalInt32Copy: undefined,
-                    OptionalInt32Default: undefined,
-                    OptionalInt32DefaultWithoutValue: undefined,
-                    OptionalInt32Increment: undefined,
-                    OptionalInt32Delta: undefined
-                },
-                {
-                    MandatoryInt32: 1,
-                    MandatoryInt32Const: -2147483648,
-                    MandatoryInt32Copy: 2147483647,
-                    MandatoryInt32Default: 2147483647,
-                    MandatoryInt32Increment: -2147483648,
-                    MandatoryInt32Delta: -2147483648,
-                    OptionalInt32: undefined,
-                    OptionalInt32Const: undefined,
-                    OptionalInt32Copy: undefined,
-                    OptionalInt32Default: undefined,
-                    OptionalInt32DefaultWithoutValue: undefined,
-                    OptionalInt32Increment: undefined,
-                    OptionalInt32Delta: undefined
-                },
-                {
-                    MandatoryInt32: 1000,
-                    MandatoryInt32Const: -2147483648,
-                    MandatoryInt32Copy: 2147483647,
-                    MandatoryInt32Default: -2147483648,
-                    MandatoryInt32Increment: -2147483647,
-                    MandatoryInt32Delta: 2147483647,
-                    OptionalInt32: 1,
-                    OptionalInt32Const: -2147483648,
-                    OptionalInt32Copy: undefined,
-                    OptionalInt32Default: 2147483647,
-                    OptionalInt32DefaultWithoutValue: 2147483646,
-                    OptionalInt32Increment: 0,
-                    OptionalInt32Delta: 0
-                },
-                {
-                    MandatoryInt32: 1000000,
-                    MandatoryInt32Const: -2147483648,
-                    MandatoryInt32Copy: -2147483648,
-                    MandatoryInt32Default: 2147483647,
-                    MandatoryInt32Increment: -1,
-                    MandatoryInt32Delta: -2147483648,
-                    OptionalInt32: undefined,
-                    OptionalInt32Const: undefined,
-                    OptionalInt32Copy: undefined,
-                    OptionalInt32Default: undefined,
-                    OptionalInt32DefaultWithoutValue: undefined,
-                    OptionalInt32Increment: undefined,
-                    OptionalInt32Delta: undefined
-                },
-                {
-                    MandatoryInt32: 1000000000,
-                    MandatoryInt32Const: -2147483648,
-                    MandatoryInt32Copy: -2147483648,
-                    MandatoryInt32Default: -2147483648,
-                    MandatoryInt32Increment: 0,
-                    MandatoryInt32Delta: 1,
-                    OptionalInt32: -1,
-                    OptionalInt32Const: -2147483648,
-                    OptionalInt32Copy: undefined,
-                    OptionalInt32Default: 1,
-                    OptionalInt32DefaultWithoutValue: 1,
-                    OptionalInt32Increment: -1,
-                    OptionalInt32Delta: -2147483648
-                },
-                {
-                    MandatoryInt32: 2000000000,
-                    MandatoryInt32Const: -2147483648,
-                    MandatoryInt32Copy: 0,
-                    MandatoryInt32Default: 0,
-                    MandatoryInt32Increment: 1,
-                    MandatoryInt32Delta: 0,
-                    OptionalInt32: -2147483648,
-                    OptionalInt32Const: undefined,
-                    OptionalInt32Copy: undefined,
-                    OptionalInt32Default: 0,
-                    OptionalInt32DefaultWithoutValue: 0,
-                    OptionalInt32Increment: 0,
-                    OptionalInt32Delta: 2147483647
-                },
-                {
-                    MandatoryInt32: -2000000000,
-                    MandatoryInt32Const: -2147483648,
-                    MandatoryInt32Copy: 2147483647,
-                    MandatoryInt32Default: 2147483647,
-                    MandatoryInt32Increment: -1,
-                    MandatoryInt32Delta: -1,
-                    OptionalInt32: undefined,
-                    OptionalInt32Const: -2147483648,
-                    OptionalInt32Copy: undefined,
-                    OptionalInt32Default: -1,
-                    OptionalInt32DefaultWithoutValue: -1,
-                    OptionalInt32Increment: 1,
-                    OptionalInt32Delta: -1
-                },
-                {
-                    MandatoryInt32: -2147483648,
-                    MandatoryInt32Const: -2147483648,
-                    MandatoryInt32Copy: -2147483648,
-                    MandatoryInt32Default: -2147483648,
-                    MandatoryInt32Increment: 2147483647,
-                    MandatoryInt32Delta: 2147483647,
-                    OptionalInt32: 2147483646,
-                    OptionalInt32Const: undefined,
-                    OptionalInt32Copy: undefined,
-                    OptionalInt32Default: 2147483647,
-                    OptionalInt32DefaultWithoutValue: undefined,
-                    OptionalInt32Increment: -2147483648,
-                    OptionalInt32Delta: 0
-                },
-                {
-                    MandatoryInt32: 2147483647,
-                    MandatoryInt32Const: -2147483648,
-                    MandatoryInt32Copy: -1,
-                    MandatoryInt32Default: -1,
-                    MandatoryInt32Increment: 0,
-                    MandatoryInt32Delta: -1,
-                    OptionalInt32: 0,
-                    OptionalInt32Const: -2147483648,
-                    OptionalInt32Copy: undefined,
-                    OptionalInt32Default: undefined,
-                    OptionalInt32DefaultWithoutValue: undefined,
-                    OptionalInt32Increment: -2147483648,
-                    OptionalInt32Delta: 0
-                }
-            ]
+            MsgSeqNum: 4242,
+            SendingTime: 1550147484,
+            MDEntries: [{
+                MDUpdateAction: 50,
+                MDEntryType: '42',
+                SecurityID: 123,
+                RptSeq: 125,
+                BTBGraceDate: 1550147485
+            }]
         }
     }
 ])
+
+// testCodec([
+//     {
+//         name: "Int32TestMessage",
+//         msg: {
+//             Int32Array: [
+//                 {
+//                     MandatoryInt32: -8193,
+//                     MandatoryInt32Const: -2147483648,
+//                     MandatoryInt32Copy: 2147483647,
+//                     MandatoryInt32Default: 2147483647,
+//                     MandatoryInt32Increment: -2147483648,
+//                     MandatoryInt32Delta: -2147483648,
+//                     OptionalInt32: -942755,
+//                     OptionalInt32Const: undefined,
+//                     OptionalInt32Copy: undefined,
+//                     OptionalInt32Default: undefined,
+//                     OptionalInt32DefaultWithoutValue: undefined,
+//                     OptionalInt32Increment: undefined,
+//                     OptionalInt32Delta: undefined
+//                 },
+//                 {
+//                     MandatoryInt32: 1,
+//                     MandatoryInt32Const: -2147483648,
+//                     MandatoryInt32Copy: 2147483647,
+//                     MandatoryInt32Default: 2147483647,
+//                     MandatoryInt32Increment: -2147483648,
+//                     MandatoryInt32Delta: -2147483648,
+//                     OptionalInt32: undefined,
+//                     OptionalInt32Const: undefined,
+//                     OptionalInt32Copy: undefined,
+//                     OptionalInt32Default: undefined,
+//                     OptionalInt32DefaultWithoutValue: undefined,
+//                     OptionalInt32Increment: undefined,
+//                     OptionalInt32Delta: undefined
+//                 },
+//                 {
+//                     MandatoryInt32: 1000,
+//                     MandatoryInt32Const: -2147483648,
+//                     MandatoryInt32Copy: 2147483647,
+//                     MandatoryInt32Default: -2147483648,
+//                     MandatoryInt32Increment: -2147483647,
+//                     MandatoryInt32Delta: 2147483647,
+//                     OptionalInt32: 1,
+//                     OptionalInt32Const: -2147483648,
+//                     OptionalInt32Copy: undefined,
+//                     OptionalInt32Default: 2147483647,
+//                     OptionalInt32DefaultWithoutValue: 2147483646,
+//                     OptionalInt32Increment: 0,
+//                     OptionalInt32Delta: 0
+//                 },
+//                 {
+//                     MandatoryInt32: 1000000,
+//                     MandatoryInt32Const: -2147483648,
+//                     MandatoryInt32Copy: -2147483648,
+//                     MandatoryInt32Default: 2147483647,
+//                     MandatoryInt32Increment: -1,
+//                     MandatoryInt32Delta: -2147483648,
+//                     OptionalInt32: undefined,
+//                     OptionalInt32Const: undefined,
+//                     OptionalInt32Copy: undefined,
+//                     OptionalInt32Default: undefined,
+//                     OptionalInt32DefaultWithoutValue: undefined,
+//                     OptionalInt32Increment: undefined,
+//                     OptionalInt32Delta: undefined
+//                 },
+//                 {
+//                     MandatoryInt32: 1000000000,
+//                     MandatoryInt32Const: -2147483648,
+//                     MandatoryInt32Copy: -2147483648,
+//                     MandatoryInt32Default: -2147483648,
+//                     MandatoryInt32Increment: 0,
+//                     MandatoryInt32Delta: 1,
+//                     OptionalInt32: -1,
+//                     OptionalInt32Const: -2147483648,
+//                     OptionalInt32Copy: undefined,
+//                     OptionalInt32Default: 1,
+//                     OptionalInt32DefaultWithoutValue: 1,
+//                     OptionalInt32Increment: -1,
+//                     OptionalInt32Delta: -2147483648
+//                 },
+//                 {
+//                     MandatoryInt32: 2000000000,
+//                     MandatoryInt32Const: -2147483648,
+//                     MandatoryInt32Copy: 0,
+//                     MandatoryInt32Default: 0,
+//                     MandatoryInt32Increment: 1,
+//                     MandatoryInt32Delta: 0,
+//                     OptionalInt32: -2147483648,
+//                     OptionalInt32Const: undefined,
+//                     OptionalInt32Copy: undefined,
+//                     OptionalInt32Default: 0,
+//                     OptionalInt32DefaultWithoutValue: 0,
+//                     OptionalInt32Increment: 0,
+//                     OptionalInt32Delta: 2147483647
+//                 },
+//                 {
+//                     MandatoryInt32: -2000000000,
+//                     MandatoryInt32Const: -2147483648,
+//                     MandatoryInt32Copy: 2147483647,
+//                     MandatoryInt32Default: 2147483647,
+//                     MandatoryInt32Increment: -1,
+//                     MandatoryInt32Delta: -1,
+//                     OptionalInt32: undefined,
+//                     OptionalInt32Const: -2147483648,
+//                     OptionalInt32Copy: undefined,
+//                     OptionalInt32Default: -1,
+//                     OptionalInt32DefaultWithoutValue: -1,
+//                     OptionalInt32Increment: 1,
+//                     OptionalInt32Delta: -1
+//                 },
+//                 {
+//                     MandatoryInt32: -2147483648,
+//                     MandatoryInt32Const: -2147483648,
+//                     MandatoryInt32Copy: -2147483648,
+//                     MandatoryInt32Default: -2147483648,
+//                     MandatoryInt32Increment: 2147483647,
+//                     MandatoryInt32Delta: 2147483647,
+//                     OptionalInt32: 2147483646,
+//                     OptionalInt32Const: undefined,
+//                     OptionalInt32Copy: undefined,
+//                     OptionalInt32Default: 2147483647,
+//                     OptionalInt32DefaultWithoutValue: undefined,
+//                     OptionalInt32Increment: -2147483648,
+//                     OptionalInt32Delta: 0
+//                 },
+//                 {
+//                     MandatoryInt32: 2147483647,
+//                     MandatoryInt32Const: -2147483648,
+//                     MandatoryInt32Copy: -1,
+//                     MandatoryInt32Default: -1,
+//                     MandatoryInt32Increment: 0,
+//                     MandatoryInt32Delta: -1,
+//                     OptionalInt32: 0,
+//                     OptionalInt32Const: -2147483648,
+//                     OptionalInt32Copy: undefined,
+//                     OptionalInt32Default: undefined,
+//                     OptionalInt32DefaultWithoutValue: undefined,
+//                     OptionalInt32Increment: -2147483648,
+//                     OptionalInt32Delta: 0
+//                 }
+//             ]
+//         }
+//     }
+// ])
 
 // testCodec([
 //     {
